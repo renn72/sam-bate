@@ -8,15 +8,13 @@ import {
   MotionValue,
 } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 
 import { useState, useEffect } from 'react';
 
 function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
+  const { innerWidth: width, } = global?.window ? window : { innerWidth: 0 };
   return {
     width,
-    height
   };
 }
 
@@ -44,7 +42,7 @@ export const HeroParallax = ({
     thumbnail: string;
   }[];
 }) => {
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const firstRow = products.slice(0, 3);
   const secondRow = products.slice(3, 6);
