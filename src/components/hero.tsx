@@ -9,7 +9,7 @@ const Hero = () => {
   return (
     <AuroraBackground className="">
       <div className="overflow-x-hidden flex flex-col w-screen gap-4 items-center justify-center dark:bg-grid-black/[0.05] h-screen">
-        <div className="text-3xl md:text-9xl font-bold dark:text-white px-12">
+        <div className="text-5xl md:text-9xl font-bold dark:text-white px-12">
           <TextGenerateEffect words={"Sam Bate"} />
         </div>
         <motion.div

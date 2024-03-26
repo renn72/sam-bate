@@ -10,6 +10,32 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
+import { useState, useEffect } from 'react';
+
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+}
+
+export default function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
+
+
 export const HeroParallax = ({
   products,
 }: {
@@ -18,6 +44,8 @@ export const HeroParallax = ({
     thumbnail: string;
   }[];
 }) => {
+  const { height, width } = useWindowDimensions();
+
   const firstRow = products.slice(0, 3);
   const secondRow = products.slice(3, 6);
   const thirdRow = products.slice(6, 9);
@@ -30,11 +58,11 @@ export const HeroParallax = ({
   const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 1000]),
+    useTransform(scrollYProgress, [0, 1], [0, width > 800 ? 800 : 200]),
     springConfig,
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -1000]),
+    useTransform(scrollYProgress, [0, 1], [0, width > 800 ? -800 : -200]),
     springConfig,
   );
   const rotateX = useSpring(
@@ -42,7 +70,7 @@ export const HeroParallax = ({
     springConfig,
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
+    useTransform(scrollYProgress, [0, 0.6], [0.1, 1]),
     springConfig,
   );
   const rotateZ = useSpring(
@@ -50,13 +78,13 @@ export const HeroParallax = ({
     springConfig,
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
+    useTransform(scrollYProgress, [0, 0.4], [-600, width > 800 ? 500 : 100]),
     springConfig,
   );
   return (
     <div
       ref={ref}
-      className="h-[200vh] py-10 overflow-hidden px-40  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
+      className=" md:h-[200vh] py-80 md:py-20 overflow-hidden md:px-40  antialiased relative flex flex-col self-auto [perspective:1000px] [transform-style:preserve-3d]"
     >
       <Header />
       <motion.div
@@ -68,7 +96,7 @@ export const HeroParallax = ({
         }}
         className=""
       >
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20 mb-10">
+        <motion.div className="flex flex-row-reverse space-x-reverse space-x-2 md:space-x-20 mb-4 md:mb-10">
           {firstRow.map((product) => (
             <ProductCard
               product={product}
@@ -77,7 +105,7 @@ export const HeroParallax = ({
             />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row  mb-10 space-x-20 ">
+        <motion.div className="flex flex-row  mb-4 md:mb-10 space-x-2 md:space-x-20 ">
           {secondRow.map((product) => (
             <ProductCard
               product={product}
@@ -86,7 +114,7 @@ export const HeroParallax = ({
             />
           ))}
         </motion.div>
-        <motion.div className="flex flex-row-reverse space-x-reverse space-x-20">
+        <motion.div className="flex flex-row-reverse space-x-reverse space-x-2 md:space-x-20">
           {thirdRow.map((product) => (
             <ProductCard
               product={product}
@@ -102,11 +130,11 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full  left-0 top-0">
-      <h1 className="text-2xl md:text-7xl font-bold dark:text-white">
+    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-20 md:px-4 w-full  left-0 top-0">
+      <h1 className="text-4xl md:text-7xl font-bold dark:text-white">
         Makin <br /> some cool shit
       </h1>
-      <p className="max-w-2xl text-base md:text-xl mt-8 dark:text-neutral-200">
+      <p className="max-w-2xl text-base md:text-xl mt-8 font-medium dark:text-white">
         By blending science and creativity, I craft innovative dishes that push
         the boundaries of taste and texture. With a passion for experimentation
         and a flair for the unexpected, I'm constantly pioneering new culinary
@@ -136,7 +164,7 @@ export const ProductCard = ({
         y: -20,
       }}
       key={product.title}
-      className="group/product h-96 w-[30rem] relative flex-shrink-0"
+      className="group/product h-56 w-40 md:h-96 md:w-[30rem] relative flex-shrink-0"
     >
         <Image
           src={product.thumbnail}

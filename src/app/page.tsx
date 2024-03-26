@@ -9,6 +9,7 @@ export default function Home() {
       <Hero />
       <Parallax />
       <Review />
+      <div className='py-20'/>
       <Contact />
       <div className='py-40'/>
     </main>
