@@ -22,7 +22,7 @@ const Hero = () => {
           }}
           className="font-normal text-base md:text-xl dark:text-neutral-400 py-4"
         >
-          makes some cool shit
+          makin some cool shit
         </motion.div>
       </div>
     </AuroraBackground>

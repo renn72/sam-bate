@@ -8,9 +8,9 @@ const Parallax = () => {
 
 const products = [
   {
-    title: "Cherries",
+    title: "Poacher and Hound",
     thumbnail:
-      "/images/cherries.avif",
+      "/images/poacher.png",
   },
   {
     title: "Deez Nuts",
@@ -18,15 +18,14 @@ const products = [
       "/images/nuts.webp",
   },
   {
-    title: "Poacher and Hound",
+    title: "Cherries",
     thumbnail:
-      "/images/poacher.png",
+      "/images/cherries.avif",
   },
-
   {
-    title: "Inovation",
+    title: "Mushrooms",
     thumbnail:
-      "/images/quail.jpg",
+      "/images/mushrooms.jpg",
   },
   {
     title: "Great Head",
@@ -44,9 +43,9 @@ const products = [
       "/images/fish.jpg",
   },
   {
-    title: "Mushrooms",
+    title: "Inovation",
     thumbnail:
-      "/images/mushrooms.jpg",
+      "/images/quail.jpg",
   },
   {
     title: "More Sausages",
